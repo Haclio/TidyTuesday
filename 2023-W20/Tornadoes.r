@@ -1,7 +1,9 @@
 library(hms)
+library(tidyverse)
+library(here)
 setwd("./2023-W20")
 
-# # Import and clean all the data
+# # Import and clean all the data, just once
 # tuesdata <- tidytuesdayR::tt_load(2023, week = 20)
 
 # url <- "https://www.spc.noaa.gov/wcm/data/1950-2022_actual_tornadoes.csv"
@@ -140,41 +142,42 @@ setwd("./2023-W20")
 #   )
 # )
 
+#The next times, just read the created csv
 tornadoes <- read.csv("C:/Users/nadalinl.AD/Documents/GitHub/TidyTuesday/2023-W20/tornadoes.csv")
 
 tornadoes <- tornadoes |>
-  mutate(region = case_when(
+  mutate(region = case_when( #Adding a 'region' column
                           st == "CT" | st == "ME" | st == "MA" | st == "NH"| st == "RI"| st == "VT" ~ "Northeast",
                           st == "IL" | st == "IN" | st == "MI" | st == "OH"| st == "WI"| st == "IA" | st == "KS" | st == "MN" | st == "MO" | st == "NE" | st == "ND"| st == "SD" ~ "Midwest",
                           st == "DE" | st == "FL" | st == "GA" | st == "NC"| st == "SC"| st == "VA" | st == "DC" | st == "WV" | st == "AL" | st == "KY" | st == "MS"| st == "TN" | st == "AR" | st == "LA" | st == "OK" | st == "TX" ~ "South",
                           st == "WA" | st == "AZ" | st == "CO" | st == "ID"| st == "MT"| st == "NV" | st == "NM" | st == "UT" | st == "WY" | st == "AK" | st == "CA"| st == "HI" | st == "OR" ~ "West",
                           TRUE ~ "Other"
 )) |>
-mutate(region = factor(region, levels = c("West", "Midwest", "South", "Northeast", "Other"))) |>
-mutate(time = as_hms(time)) |>
-mutate(mag = as.factor(mag))
-tornadoes$mo <- month.abb[tornadoes$mo] 
-tornadoes %<>%
+mutate(region = factor(region, levels = c("West", "Midwest", "South", "Northeast", "Other"))) |> #Ordering of the 'region' factor levels
+mutate(time = as_hms(time)) |> #Transforming the 'time' variable into an appropriate time class
+mutate(mag = as.factor(mag)) #Transforming the 'mag' variable into a factor
+tornadoes$mo <- month.abb[tornadoes$mo] #Replacing the months' numbers by their abbreviated names
+tornadoes %<>% #Reordering the months factor levels
   mutate(mo = factor(mo, levels = c("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec")))
 
-tperyear <- tornadoes |>
+tperyear <- tornadoes |> #Number of tornadoes per year
   ggplot() +
   geom_bar(aes(x = yr), fill = "cadetblue") +
-  scale_y_continuous(breaks = seq(0, 2000, 250), expand = c(0.005, 0)) +
-  scale_x_continuous(breaks = seq(1950, 2022, 5), expand = c(0, 0)) +
-  xlab("Year") +
-  ylab("Number of tornadoes") +
-  ggtitle("Total number of tornadoes each year, 1950-2022") +
-  theme(panel.grid.major.y = element_line(color = "white", linewidth = 0.1),
-  panel.grid.major.x = element_blank(), panel.grid.minor = element_blank(),
-  axis.text.x = element_text(color = 'white'), axis.text.y = element_text(color = 'white'),
-  axis.title.x = element_text(face = "bold"), axis.title.y = element_text(face = "bold"),
-  text = element_text(color = 'white', size = 16),
-  axis.ticks.x = element_line(color = "white", linewidth = 0.5),
-  panel.background = element_rect(fill = 'grey25'), plot.background = element_rect(fill = 'grey25'))
+  scale_y_continuous(breaks = seq(0, 2000, 250), expand = c(0.005, 0)) + #Sets the axis breaks and distance from the data
+  scale_x_continuous(breaks = seq(1950, 2022, 5), expand = c(0, 0)) + #Sets the axis breaks and distance from the data
+  xlab("Year") + #Renaming axes
+  ylab("Number of tornadoes") + #Renaming axes
+  ggtitle("Total number of tornadoes each year, 1950-2022") + #Sets plot title
+  theme(panel.grid.major.y = element_line(color = "white", linewidth = 0.1), 
+  panel.grid.major.x = element_blank(), panel.grid.minor = element_blank(), #panel.grid.* sets the background grid
+  axis.text.x = element_text(color = 'white'), axis.text.y = element_text(color = 'white'), #Changes the axes breaks text color
+  axis.title.x = element_text(face = "bold"), axis.title.y = element_text(face = "bold"), #Changes the axes title fontface
+  text = element_text(color = 'white', size = 16), #Should set the color and size of all the text on the plot
+  axis.ticks.x = element_line(color = "white", linewidth = 0.5), #Sets the color and width of the axis ticks
+  panel.background = element_rect(fill = 'grey25'), plot.background = element_rect(fill = 'grey25')) #Sets the panel and background color
 tperyear
 
-tpermonth <- tornadoes |>
+tpermonth <- tornadoes |> #Number of tornadoes each month of the year
   ggplot() +
   geom_bar(aes(x = mo), fill = "cadetblue") +
   scale_y_continuous(breaks = seq(0, 15000, 1000), expand = c(0, 0)) +
@@ -189,7 +192,7 @@ tpermonth <- tornadoes |>
   panel.background = element_rect(fill = 'grey25'), plot.background = element_rect(fill = 'grey25'))
 tpermonth
  
-tperstate <- tornadoes |> 
+tperstate <- tornadoes |>  #Number of tornadoes per state
  ggplot() +
  geom_bar(aes(x = fct_infreq(st), fill = region)) +
  ggtitle("Total number of tornadoes per U.S. state, 1950-2022") +
@@ -197,9 +200,9 @@ tperstate <- tornadoes |>
  ylab("Number of tornadoes (total, 1950-2022)") +
  scale_fill_manual("Region", values = c25[18:22]) +
  scale_y_continuous(breaks = seq(0, 10000, 1000), expand = c(0, 0)) +
- theme(legend.position = c(0.942, 0.875), legend.background = element_rect(fill = "grey25", color = "white"),
-  legend.key.size = unit(1, 'cm'), legend.title = element_text(size=16, face = "bold"), #change legend title font size
-  legend.text = element_text(size=16, face = "bold"),
+ theme(legend.position = c(0.942, 0.875), legend.background = element_rect(fill = "grey25", color = "white"), #Sets the legend position and background color
+  legend.key.size = unit(1, 'cm'), legend.title = element_text(size=16, face = "bold"), #Sets the legend title font size and fontface
+  legend.text = element_text(size=16, face = "bold"), #Sets the legend text font size and fontface
   panel.grid.major.y = element_line(color = "white", linewidth = 0.1),
   panel.grid.major.x = element_blank(), panel.grid.minor = element_blank(),
   plot.title = element_text(face = "bold", size = 20),
@@ -209,12 +212,12 @@ tperstate <- tornadoes |>
   panel.background = element_rect(fill = 'grey25'), plot.background = element_rect(fill = 'grey25'))
 tperstate
 
-ttimes <- tornadoes |>
-  # filter(yr >= 2000) |>
+ttimes <- tornadoes |> #Number of tornadoes per time of day
+  # filter(yr >= 2000) |> #Is used to filter the data based on the 'year' variable
   ggplot() +
   geom_bar(aes(x = time), fill = "cadetblue") +
   scale_y_continuous(expand = c(0, 0)) +
-  scale_x_time(limits = as_hms(c("00:00:00", "23:59:59")), breaks = as_hms(c("00:00:00", "04:00:00", "08:00:00", "12:00:00", "16:00:00", "20:00:00", "24:00:00"))) +
+  scale_x_time(limits = as_hms(c("00:00:00", "23:59:59")), breaks = as_hms(c("00:00:00", "04:00:00", "08:00:00", "12:00:00", "16:00:00", "20:00:00", "24:00:00"))) + #Sets the limits and breaks for the x axis
   xlab("Time of day") +
   ylab("Number of tornadoes") +
   ggtitle("Tornadoes reported by time of day, 1950-2022") +
@@ -227,7 +230,7 @@ ttimes <- tornadoes |>
   panel.background = element_rect(fill = 'grey25'), plot.background = element_rect(fill = 'grey25'))
 ttimes
 
-tdims <- tornadoes |>
+tdims <- tornadoes |> #Dimensions of tornado paths
   ggplot() +
   geom_point(aes(x = len, y = wid), color = "cadetblue") +
   scale_y_continuous(expand = c(0, 1)) +
@@ -243,19 +246,3 @@ tdims <- tornadoes |>
   axis.ticks.x = element_line(color = "white", linewidth = 0.5),
   panel.background = element_rect(fill = 'grey25'), plot.background = element_rect(fill = 'grey25'))
 tdims
-
-tcasualties <- tornadoes |>
-  ggplot() +
-  geom_boxplot(aes(x = mag, y = len), color = "cadetblue") +
-  scale_y_continuous(expand = c(0, 1)) +
-  xlab("Path length (miles)") +
-  ylab("Path width (yards)") +
-  ggtitle("Tornadoes path size, 1950-2022") +
-  theme(panel.grid.major.y = element_line(color = "white", linewidth = 0.1),
-  panel.grid.major.x = element_blank(), panel.grid.minor = element_blank(),
-  axis.text.x = element_text(color = 'white'), axis.text.y = element_text(color = 'white'),
-  axis.title.x = element_text(face = "bold"), axis.title.y = element_text(face = "bold"),
-  text = element_text(color = 'white', size = 16),
-  axis.ticks.x = element_line(color = "white", linewidth = 0.5),
-  panel.background = element_rect(fill = 'grey25'), plot.background = element_rect(fill = 'grey25'))
-tcasualties

@@ -5,7 +5,6 @@ library(pacman)
 p_load(tidytuesdayR, jsonlite, OpenStreetMap, sf, installr, devtools, tidyverse, ggrepel, readxl, ggiraphExtra, openxlsx, lmtest, onewaytests, PMCMRplus, FSA, multcompView, emmeans, multcomp, clipr, ggforce, rcompanion, RVAideMemoire, magrittr, extrafont, patchwork, ragg, lemon, DescTools, tidylog, showtext, reshape2, here, languageserver, httpgd, ggpattern)
 
 install.Rtools()
-setwd("C:/Users/nadalinl.AD/Documents/GitHub/TidyTuesday") #ATTENTION, à changer selon le dossier !!!
 
 c25 <- c("dodgerblue2", "#E31A1C", # red
                       "green4",

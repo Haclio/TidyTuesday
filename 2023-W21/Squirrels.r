@@ -1,6 +1,8 @@
 install.packages("janitor")
 install.packages("treemapify")
 install.packages("ggh4x")
+library(tidyverse)
+library(openxlsx)
 library(treemapify) #To make the treemap
 library(janitor) #Cleaning names
 library(ggh4x) #To switch facet strip position
@@ -16,7 +18,7 @@ squir_sum <- squirrel_data |>
   drop_na(primary_fur_color) |> #Drop the NAs
   reframe(nb = n(), .by  = c("primary_fur_color", "highlight_fur_color")) |> # = summarize()
   replace_na(list(highlight_fur_color = "None")) |> #Replace NAs by "None"
-  mutate(cols = case_when(highlight_fur_color == "Black" ~ "black", #Hard-coding color values for the plot, must be a better way to do this
+  mutate(cols = case_when(highlight_fur_color == "Black" ~ "black", #Hard-coding color values for the plot, there must be a better way to do this
                           highlight_fur_color == "Gray" ~ "grey40",
                           highlight_fur_color == "Cinnamon" ~ "#ca6e04",
                           highlight_fur_color == "White" ~ "white",
@@ -37,3 +39,6 @@ facet_grid2(primary_fur_color ~ ., switch = "both", strip = strip_themed(backgro
 xlab("Highlights fur color") +
 ylab("Primary fur color") +
 theme(axis.title = element_text(size = 30), strip.text.y = element_text(size = 20, color = "white"), text = element_text(family = "Verdana"), panel.border = element_rect(color = "grey20", fill = NA), strip.background = element_rect(color = "grey20", fill = NA))
+
+write.xlsx(squirrel_data, "Squirrels.xlsx")
+write.xlsx(squir_sum, "Squirrels_summ.xlsx")

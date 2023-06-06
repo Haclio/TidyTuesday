@@ -2,7 +2,7 @@ options(repos = c(CRAN = "https://cran.rstudio.com/"), vsc.use_httpgd = TRUE, gg
 library(utils)
 if (!require("pacman")) install.packages("pacman")
 library(pacman)
-p_load(tidytuesdayR, jsonlite, OpenStreetMap, sf, installr, devtools, tidyverse, ggrepel, readxl, ggiraphExtra, openxlsx, lmtest, onewaytests, PMCMRplus, FSA, multcompView, emmeans, multcomp, clipr, ggforce, rcompanion, RVAideMemoire, magrittr, extrafont, patchwork, ragg, lemon, DescTools, tidylog, showtext, reshape2, here, languageserver, httpgd, ggpattern)
+p_load(tidytuesdayR, jsonlite, sf, installr, devtools, tidyverse, ggrepel, readxl, openxlsx, lmtest, onewaytests, PMCMRplus, FSA, multcompView, emmeans, multcomp, clipr, ggforce, rcompanion, RVAideMemoire, extrafont, patchwork, ragg, lemon, DescTools, tidylog, showtext, reshape2, here, languageserver, httpgd, ggpattern)
 
 install.Rtools()
 

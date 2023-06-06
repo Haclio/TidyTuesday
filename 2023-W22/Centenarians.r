@@ -1,7 +1,8 @@
 install.packages("ggtext")
 library(ggtext) #To add colors to specific words in the title
 library(tidyverse)
-setwd("./2023-W21")
+library(openxlsx)
+setwd("./2023-W22")
 
 centenarians <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2023/2023-05-30/centenarians.csv') |>
     mutate(ageround = floor(age)) |> #Rounding down the age
@@ -9,11 +10,12 @@ centenarians <- readr::read_csv('https://raw.githubusercontent.com/rfordatascien
     mutate(across(c(birth_date, death_date), as.Date, format = "%Y-%m-%d")) |> #Changing data type to date
     group_by(gender) |> #Grouping for arrange() below
     arrange(desc(birth_date), .by_group = TRUE) |> #Grouping by birth date, with respect of the gender
-    mutate(num = rep(1:100)) #Adding an arbitrary number for ordering
+    mutate(num = rep(1:100)) |> #Adding an arbitrary number for ordering
+    group_by(ageround, gender)
 
 cent_sum <- centenarians |>
-    reframe(n = n(), .by = c(ageround, gender)) |> #Summarizing by age and gender
-    complete(ageround = 111:122, gender, fill = list(n = 0)) #Filling the missing combinations
+    reframe(n = n()) |> #Summarizing by age and gender
+    complete(ageround = 111:122, gender, fill = list(n = 0)) #Filling the missing combinations by 0s
 
 #Age distribution plot
 ggplot(data = cent_sum) +
@@ -50,3 +52,5 @@ ggplot(centenarians, aes(x = birth_date, y = num)) +
             panel.background = element_rect(fill = "#fff6ec"), plot.background = element_rect(fill = "#fff6ec"), #Sets background and panel color
             axis.title.x = element_blank()) #Removes x axis title
 
+write.xlsx(centenarians, "Centenarians.xlsx")
+write.xlsx(cent_sum, "Centenarians_summ.xlsx")

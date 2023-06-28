@@ -11,6 +11,7 @@ library(stringi)
 # install.packages("tidycensus")
 library(tidycensus)
 
+#Greographical names counts by county
 us_place_names <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2023/2023-06-27/us_place_names.csv') |>
     mutate(county_name = gsub("\\(city\\)", "city", county_name)) |>
     mutate(county_name = gsub("\\(CA\\)", "", county_name)) |>
@@ -22,6 +23,7 @@ us_place_names <- readr::read_csv('https://raw.githubusercontent.com/rfordatasci
 us_sum <- us_place_names |>
     count(state_name, county_name)
 
+#Geographical data by county
 us_counties <- get(data(fips_codes)) |>
     rename(county_name = "county") |>
     mutate(county_name = gsub(" County", "", county_name)) |>
@@ -32,14 +34,19 @@ us_counties <- get(data(fips_codes)) |>
 us_counties <- us_counties|>
     mutate(county_name = gsub(" Borough| Census Area| Municipality| City and Borough| Municipio| Parish", "", county_name))
 
-us_poly <- tigris::counties(class = "sf", cb = TRUE)
+us_poly <- tigris::counties(class = "sf", cb = TRUE) |>
+    rename(state_name = "STATE_NAME") |>
+    rename(county_name = "NAME")
 ct_geom <- st_read("Connecticut/Connecticut.shp") |>
     mutate(new_region = gsub("CT", "Connecticut", new_region)) |>
     arrange(new_region) |>
     mutate(GEOID = paste0("09", seq(110, 190, by = 10))) |>
-    rename(NAME = "new_region") |>
+    rename(county_name = "new_region") |>
     mutate(state_name = "Connecticut") |>
-    select(NAME, GEOID, state_name) |>
+    select(county_name, GEOID, state_name) |>
+    mutate(county_name = gsub("ern", "ern Connecticut", county_name)) |>
+    mutate(county_name = gsub("Central", "Central Connecticut", county_name)) |>
+    mutate(county_name = gsub("Capitol Region", "Capitol", county_name)) |>
     st_transform(crs = 4269)
 us_poly <- bind_rows(us_poly, ct_geom)
 
@@ -47,7 +54,7 @@ us_states <- tigris::states(class = "sf", cb = TRUE) |>
     filter(!NAME == "American Samoa" & !NAME == "Alaska" & !NAME == "Hawaii" & !NAME == "United States Virgin Islands" & !NAME == "Puerto Rico" & !NAME == "Commonwealth of the Northern Mariana Islands" & !NAME == "Guam")
 
 
-us_counties2 <- merge(us_poly, us_counties, by = "GEOID")
+us_counties2 <- merge(us_poly, us_counties, by = c("state_name", "county_name", "GEOID"))
 
 us_df <- merge(us_counties2, us_sum, by = c("state_name", "county_name"))
 

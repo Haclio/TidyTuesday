@@ -29,7 +29,8 @@ us_counties <- get(data(fips_codes)) |>
     mutate(county_name = gsub(" County", "", county_name)) |>
     mutate(GEOID = paste0(state_code, county_code)) |>
     filter(!state_name == "American Samoa" & !state_name == "Alaska" & !state_name == "Hawaii" & !state_name == "United States Virgin Islands" & !state_name == "Puerto Rico" & !state_name == "Commonwealth of the Northern Mariana Islands" & !state_name == "Guam") |>
-    mutate(county_name = ifelse(state == "LA", gsub("La Salle", "LaSalle", county_name), county_name))
+    mutate(county_name = ifelse(state == "LA", gsub("La Salle", "LaSalle", county_name), county_name)) |>
+    mutate(county_name = gsub("Doña", "Dona", county_name))
 
 us_counties <- us_counties|>
     mutate(county_name = gsub(" Borough| Census Area| Municipality| City and Borough| Municipio| Parish", "", county_name))

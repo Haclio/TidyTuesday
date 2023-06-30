@@ -11,7 +11,7 @@ library(stringi)
 # install.packages("tidycensus")
 library(tidycensus)
 
-#Greographical names counts by county
+#Geographical names counts by county
 us_place_names <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2023/2023-06-27/us_place_names.csv') |>
     mutate(county_name = gsub("\\(city\\)", "city", county_name)) |>
     mutate(county_name = gsub("\\(CA\\)", "", county_name)) |>
@@ -37,7 +37,9 @@ us_counties <- us_counties|>
 
 us_poly <- tigris::counties(class = "sf", cb = TRUE) |>
     rename(state_name = "STATE_NAME") |>
-    rename(county_name = "NAME")
+    rename(county_name = "NAME") |>
+    mutate(county_name = ifelse(grepl(("city"), NAMELSAD), paste(county_name, "city"), county_name)) |>
+    mutate(county_name = gsub("Doña", "Dona", county_name))
 ct_geom <- st_read("Connecticut/Connecticut.shp") |>
     mutate(new_region = gsub("CT", "Connecticut", new_region)) |>
     arrange(new_region) |>
@@ -62,11 +64,13 @@ us_df <- merge(us_counties2, us_sum, by = c("state_name", "county_name"))
 ggplot() +
     geom_sf(data = us_df, aes(geometry = geometry, fill = as.numeric(n))) +
     geom_sf(data = us_states, aes(geometry = geometry), fill = NA, color = "black", linewidth = 0.3) +
-    scale_fill_gradientn(name = "Number of geographic names", trans = "log", breaks = c(5, 25, 125, 625, 3125), colors = hcl.colors(20, "Lajolla", alpha = 0.8, rev = FALSE)) +
+    scale_fill_gradientn(name = "Count", trans = "log", breaks = c(5, 25, 125, 625, 3125), colors = hcl.colors(20, "Purples", rev = TRUE)) +
+    ggtitle("Number of geographic names at the county level, USA") +
+    labs(caption = "Twitter : @LouisNadalin | Github : Haclio | Dataset : US Board of Geographic Names | #Tidytuesday week 26") +
     theme_void() +
     theme(legend.key.width = unit(1.5, "cm"), legend.position = "bottom",
-    panel.background = element_rect(fill = "#071D26", color = NA), plot.background = element_rect(fill = "#071D26", color = NA),
-    legend.background = element_rect(fill = "#071D26", color = NA), legend.text = element_text(color = "#fff6ec", size = 20, face = "bold"),
-    legend.title = element_text(color = "#fff6ec", size = 24, face = "bold", margin = margin(0, 0, 50, 0)), legend.title.align = 0.5,
-    plot.title = element_text(face = "bold", color = "#fff6ec", size = 30, hjust = 0.5, vjust = 3, margin = margin(50, 0, 0, 0)))
-
+    panel.background = element_rect(fill = "mistyrose3", color = NA), plot.background = element_rect(fill = "mistyrose3", color = NA),
+    legend.background = element_rect(fill = "mistyrose3", color = NA), legend.text = element_text(color = "#280D5E", size = 16, face = "bold"),
+    legend.title = element_text(color = "#280D5E", size = 20, face = "bold", margin = margin(0, 0, 50, 10)), legend.title.align = 0.5,
+    plot.title = element_text(face = "bold", color = "#280D5E", size = 30, hjust = 0.5, vjust = 3, margin = margin(50, 0, 0, 0)), 
+    text = element_text(color = "#280D5E", size = 14, face = "bold"))

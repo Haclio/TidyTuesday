@@ -15,77 +15,67 @@ historical_markers <- readr::read_csv('https://raw.githubusercontent.com/rfordat
 mosquito <- historical_markers |>
                 filter(grepl("mosquito", title, ignore.case = TRUE)) |>
                 mutate(type = "Mosquito")
+# Personal picture
 
 sandfly <- historical_markers |>
                 filter(grepl("sandfly", title, ignore.case = TRUE)) |>
                 mutate(type = "Sandfly")
-sandflyimg <- readPNG("sandfly.png") # https://dic.academic.ru/pictures/wiki/files/80/Phlebotomus_pappatasi_bloodmeal_finished.jpg
+# https://dic.academic.ru/pictures/wiki/files/80/Phlebotomus_pappatasi_bloodmeal_finished.jpg
 
 bee <- historical_markers |>
                 filter(grepl("beehive", title, ignore.case = TRUE) | grepl("Bee ", title) | grepl("Bee-Hive", title) | grepl("Beeville", title)) |>
                 mutate(type = "Bee")
+# https://upload.wikimedia.org/wikipedia/commons/c/cd/Honeybee-27527-1.jpg
 
 wasp <- historical_markers |>
                 filter(grepl("wasp", title, ignore.case = TRUE)) |>
                 mutate(type = "Wasp")
-waspimg <- readPNG("waspimg.png") # https://upload.wikimedia.org/wikipedia/commons/f/f4/Wasp_March_2008-1.jpg
+# https://upload.wikimedia.org/wikipedia/commons/f/f4/Wasp_March_2008-1.jpg
 
 weevil <- historical_markers |>
                 filter(grepl("weevil", title, ignore.case = TRUE)) |>
                 mutate(type = "Weevil")
-weevilimg <- readPNG("weevilimg.png") #https://www.flickr.com/photos/bareego/5584903730/
+# https://www.flickr.com/photos/bareego/5584903730/
 
 firebug <- historical_markers |>
                 filter(grepl("firebug", title, ignore.case = TRUE)) |>
                 mutate(type = "Firebug")
+# https://upload.wikimedia.org/wikipedia/commons/6/6a/Pyrrhocoris_apterus_%28punaise_rouge%29.JPG
 
 grasshopper <- historical_markers |>
                 filter(grepl("grasshopper", title, ignore.case = TRUE)) |>
                 mutate(type = "Grasshopper")
+# https://upload.wikimedia.org/wikipedia/commons/3/37/Heupferd_fg01.jpg
 
 locust <- historical_markers |>
                 filter(grepl("locust", title, ignore.case = TRUE)) |>
                 mutate(type = "Locust")
-locustimg <- readPNG("locust.png") #https://pxhere.com/en/photo/862090
+# https://pxhere.com/en/photo/862090
 
 louse <- historical_markers |>
                 filter(grepl("louse", title, ignore.case = TRUE)) |>
                 mutate(type = "Louse")
+# https://upload.wikimedia.org/wikipedia/commons/4/45/Male_human_head_louse.jpg
 
 df <- rbind(bee, firebug, grasshopper, locust, louse, mosquito, sandfly, wasp, weevil)
 
-
-# label <- c(
-#   Weevil = "<img src='C:/Users/lloui/Documents/GitHub/TidyTuesday/2023-W27/weevilimg.png'> alt='blblbl'",
-#   Wasp = glue("<img src='https://dic.academic.ru/pictures/wiki/files/80/Phlebotomus_pappatasi_bloodmeal_finished.jpg'/>")
-# )
-
-# img <- readPNG("https://via.placeholder.com/150/FFFF00/000000?Text=google.com")
-
 label <- c(
-  Wasp = readPNG("C:/Users/lloui/Documents/GitHub/TidyTuesday/2023-W27/weevilimg.png")
-)
+  Weevil = "<img src='weevilimg.png' height = 65>",
+  Wasp = "<img src='waspimg.png' height = 65>",
+  Sandfly = "<img src='sandfly.png' height = 65>",
+  Locust = "<img src='locust.png' height = 65>",
+  Louse = "<img src='louse.png' height = 65>",
+  Mosquito = "<img src='mosquito.png' height = 65>",
+  Bee = "<img src='bee.png' height = 65>",
+  Firebug = "<img src='firebug.png' height = 65>",
+  Grasshopper = "<img src='grasshopper.png' height = 65>")
 
-
-gg1 <- ggplot(df) +
-    geom_bar(aes(x = fct_rev(fct_infreq(type)))) +
+ggplot(df, aes(x = fct_rev(fct_infreq(type)))) +
+    geom_bar(fill = "#d1941b") +
+    geom_text(stat = "count", aes(label = after_stat(count), hjust = 0.5)) +
     coord_flip() +
     scale_x_discrete(name = NULL, labels = label) +
-    theme_classic() +
-    theme(axis.title = element_blank())
-gg1
-
-gg2 <- ggplot() +
-    annotation_custom(rasterGrob(locustimg), x = , ymin = 0.75, ymax = 0.85) +
-    annotation_custom(rasterGrob(sandflyimg), xmin = 0, xmax = 1, ymin = 0.2, ymax = 0.31) +
-    annotation_custom(rasterGrob(waspimg), xmin = 0, xmax = 1, ymin = 0.08, ymax = 0.19) +
-    annotation_custom(rasterGrob(weevilimg), xmin = 0, xmax = 1, ymin = -0.04, ymax = 0.07) +
-    theme_minimal()
-
-gg2 + gg1 +
-    plot_layout(widths = c(0.1, 1))
-
-# labels <- c(
-#   Weevil = "<img src='locust.jpg' />",
-#   Wasp = "<img src='waspimg.png' />"
-# )
+    # ylim(expand = c(0.5, 0.5)) + #ERROR
+    theme_void() +
+    theme(axis.title = element_blank(), axis.text.y = element_markdown(size = 10, margin = margin(0, -30, 0, 0)),
+    plot.background = element_rect(fill = "#183913", color = NA), panel.background = element_rect(fill = "#183913", color = NA))

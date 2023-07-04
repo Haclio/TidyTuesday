@@ -1,13 +1,11 @@
 setwd("./2023-W27")
 library(tidyverse)
 library(png)
-library(jpeg)
-library(grid)
+# install.packages("ggtext")
 library(ggtext)
-library(patchwork)
-library(htmltools)
-library(cowplot)
-library(glue)
+library(extrafont)
+font_import()
+loadfonts(device = "win")
 
 historical_markers <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2023/2023-07-04/historical_markers.csv')
 # no_markers <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2023/2023-07-04/no_markers.csv')
@@ -58,6 +56,9 @@ louse <- historical_markers |>
 # https://upload.wikimedia.org/wikipedia/commons/4/45/Male_human_head_louse.jpg
 
 df <- rbind(bee, firebug, grasshopper, locust, louse, mosquito, sandfly, wasp, weevil)
+df_sum <- df |>
+  reframe(n = n(), .by = type)
+fct_relevel(df_sum$type, c("Bee", "Locust", "Grasshopper", "Mosquito", "Firebug", "Louse", "Sandfly", "Wasp", "Weevil"))
 
 label <- c(
   Weevil = "<img src='weevilimg.png' height = 65>",
@@ -70,12 +71,15 @@ label <- c(
   Firebug = "<img src='firebug.png' height = 65>",
   Grasshopper = "<img src='grasshopper.png' height = 65>")
 
-ggplot(df, aes(x = fct_rev(fct_infreq(type)))) +
-    geom_bar(fill = "#d1941b") +
-    geom_text(stat = "count", aes(label = after_stat(count), hjust = 0.5)) +
+ggplot(df_sum, aes(x = reorder(fct_rev(type), n))) +
+    geom_col(aes(y = n), width = 0.8, fill = "#d1941b") +
+    geom_text(aes(y = n -0.5, label = n), color = "#10290d", size = 14, family = "Perpetua", fontface = "bold") +
+    geom_text(aes(y = n + 0.5, label = type, hjust = 0), color = "grey60", size = 12, family = "serif", fontface = "italic") +
     coord_flip() +
     scale_x_discrete(name = NULL, labels = label) +
+    scale_y_continuous(expand = expansion(mult = c(0.5,0.5))) +
     # ylim(expand = c(0.5, 0.5)) + #ERROR
     theme_void() +
     theme(axis.title = element_blank(), axis.text.y = element_markdown(size = 10, margin = margin(0, -30, 0, 0)),
-    plot.background = element_rect(fill = "#183913", color = NA), panel.background = element_rect(fill = "#183913", color = NA))
+    plot.background = element_rect(fill = "#10290d", color = NA), panel.background = element_rect(fill = "#10290d", color = NA),
+    plot.margin = margin(1,1,1.5,1.2, "cm"))

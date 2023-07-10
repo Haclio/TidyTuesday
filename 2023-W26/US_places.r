@@ -1,6 +1,5 @@
 setwd("./2023-W26")
 library(tidyverse)
-library(paletteer)
 library(sf)
 library(maps)
 # install.packages("usmap")

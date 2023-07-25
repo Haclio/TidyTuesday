@@ -28,7 +28,7 @@ months  <- safi_data |>
             mutate(village = factor(village, levels = c("Chirodzo", "God", "Ruaca")))
 
 ggplot(months, aes(x = month, y = factor(village, levels = c("Ruaca", "God", "Chirodzo")), fill = mn)) +
-    geom_raster(fill = "#071D26", ) +
+    geom_raster(fill = "#071D26") +
     geom_tile(aes(height = 0.95, width = 0.95), color = "#071D26", lwd = 1.5) +
     coord_fixed() +
     scale_fill_paletteer_c(limits = c(0, 100), name = "Perceived lack of food (mean %)", palette = "grDevices::Lajolla") +

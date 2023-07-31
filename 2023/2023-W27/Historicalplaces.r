@@ -5,7 +5,8 @@ library(ggtext)
 library(showtext)
 showtext_opts(dpi = 320)
 showtext_auto(enable = TRUE)
-font_add(family = "fb", regular = paste(dirname(dirname(getwd())), "Fonts", "Font Awesome 6 Brands-Regular-400.otf", sep = "/")) #Brand logos
+fontsfolder <- paste(dirname(dirname(getwd())), "Fonts", sep = "/")
+font_add(family = "fb", regular = paste(fontsfolder, "Font Awesome 6 Brands-Regular-400.otf", sep = "/")) #Brand logos in fonts directory
 font_add(family = "pl", regular = "C:/Windows/Fonts/pala.ttf") #Palatino Linotype
 
 cap <- paste0("<span style='font-family:fb;'>&#xf09b; </span> Haclio  |", #Caption

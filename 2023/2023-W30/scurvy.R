@@ -5,7 +5,8 @@ library(ggtext)
 library(showtext)
 showtext_opts(dpi = 320)
 showtext_auto(enable = TRUE)
-font_add(family = "fb", regular = paste(dirname(dirname(getwd())), "Fonts", "Font Awesome 6 Brands-Regular-400.otf", sep = "/")) #Brand logos in parent (x2) directory
+fontsfolder <- paste(dirname(dirname(getwd())), "Fonts", sep = "/")
+font_add(family = "fb", regular = paste(fontsfolder, "Font Awesome 6 Brands-Regular-400.otf", sep = "/")) #Brand logos in fonts directory
 font_add(family = "vd", regular = "C:/Windows/Fonts/verdana.ttf", bold = "C:/Windows/Fonts/verdanab.ttf") #Verdana
 font_add(family = "gil", regular = "C:/Windows/Fonts/gil_____.ttf", bold = "C:/Windows/Fonts/gilb____.ttf") #Gill Sans
 

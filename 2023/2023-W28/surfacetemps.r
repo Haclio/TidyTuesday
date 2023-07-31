@@ -4,7 +4,8 @@ library(showtext)
 library(ggtext)
 showtext_opts(dpi = 320)
 showtext_auto(enable = TRUE)
-font_add(family = "fb", regular = paste(dirname(dirname(getwd())), "Fonts", "Font Awesome 6 Brands-Regular-400.otf", sep = "/")) #Brand logos
+fontsfolder <- paste(dirname(dirname(getwd())), "Fonts", sep = "/")
+font_add(family = "fb", regular = paste(fontsfolder, "Font Awesome 6 Brands-Regular-400.otf", sep = "/")) #Brand logos in fonts directory
 font_add(family = "vd", regular = "C:/Windows/Fonts/verdana.ttf", bold = "C:/Windows/Fonts/verdanab.ttf") #Verdana
 cap <- paste0("<span style='font-family:fb;'>&#xf09b; </span> Haclio  |", 
               "<span style='font-family:fb;'> &#xf099; </span>@LouisNadalin | Source: NASA GISS Surface Temperature Analysis | #TidyTuesday week 28") #Caption

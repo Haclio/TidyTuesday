@@ -11,7 +11,7 @@ library(waffle)
 library(patchwork)
 showtext_opts(dpi = 320)
 showtext_auto(enable = TRUE)
-font_add(family = "fb", regular = paste(dirname(dirname(getwd())), "Font Awesome 6 Brands-Regular-400.otf", sep = "/")) #Brand logos in parent (x2) directory
+font_add(family = "fb", regular = paste(dirname(dirname(getwd())), "Fonts", "Font Awesome 6 Brands-Regular-400.otf", sep = "/")) #Brand logos in parent (x2) directory
 font_add(family = "vd", regular = "C:/Windows/Fonts/verdana.ttf", bold = "C:/Windows/Fonts/verdanab.ttf") #Verdana
 cap <- "<span style='font-family:fb;'>&#xf09b; </span> Haclio  |  <span style='font-family:fb;'> &#xf099; </span>@LouisNadalin | Source: Simon Counch's {detectors} R package | #TidyTuesday week 29"
 

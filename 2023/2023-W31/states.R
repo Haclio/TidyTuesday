@@ -31,7 +31,7 @@ state <- merge(states, state_name_etymology) |> #Merge dataframes
     mutate(across(admission:date_named, \(x) as.Date(x, format = "%Y-%m-%d"))) |> #new across() synta, changes columns to data type
     mutate(region = factor(region, levels = c("Midwestern states", "Northeastern states", "Western states", "Southern states"))) #Makes the plot more in-line with relative position of regions
 
-ggplot(state, aes(y = state)) + 
+ggplot(state, aes(y = reorder(state, date_named))) + 
     geom_linerange(aes(xmin = date_named, xmax = admission), linewidth = 5.5, color = "#269867", alpha = 0.8) + #Line between points, first so it ends up behind the points
     geom_point(aes(x = admission), size = 5, color = "mediumturquoise") +  #First set of points
     geom_point(aes(x = date_named), size = 5, color = "#035f01") + #Second set of points

@@ -40,7 +40,7 @@ labs(title = "Too <span style = 'color: red;'>**hot**</span> to handle ?", subti
 xlab("Scoville heat units") + #X axis title
 coord_cartesian(clip = "off") + #Turns off clipping so text isn't clipped if out of panel bounds
 theme(axis.line.y = element_blank(), #No y axis line
-      axis.text.x = element_text(size = 16, family = "ssp", face = "bold"), #Axis labels formatting
+      axis.text.x = element_text(size = 14, family = "ssp", face = "bold"), #Axis labels formatting
       axis.text.y = element_text(size = 12, family = "ssp", face = "bold"), #Axis labels formatting
       axis.ticks.y = element_blank(), #No y ticks
       axis.title.x = element_text(size = 20, margin = margin(t = 10)), #Axis title formatting

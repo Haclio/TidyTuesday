@@ -26,7 +26,7 @@ fig <- plot_ly(
   layout(title= list(text = "<b>How do French people spend their 24 hours each day?</b>", font = list(size = 25), y = 2, yanchor = "bottom", yref = "container", margin = list(t = 100, b = 50), automargin = FALSE), margin = list(t = 150, b = 50, pad = list(t = 0)),
   annotations = list(text = "Source: The Human Chronome Project | #TidyTuesday week 37<br>Github: Haclio | Twitter: @LouisNadalin | Bluesky: @louisnadalin.bsky.social", font = list(size = 10), x = 0.5, y = -0.05, showarrow = FALSE, align = "center"))
 fig <- fig |>
-    add_annotations(text = "The Human Chronome project aims to gain understanding and quantify how us, <br>humans, occupy ourselves in the Anthropocene", font = list(size = 16), x = 0.5, y = 1.075, showarrow = FALSE, align = "center")
+    add_annotations(text = "The Human Chronome project aims to gain understanding and quantify how we, <br>humans, occupy ourselves in the Anthropocene", font = list(size = 16), x = 0.5, y = 1.075, showarrow = FALSE, align = "center")
 
 htmlwidgets::saveWidget(
                 widget = fig, #the plotly object

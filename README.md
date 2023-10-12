@@ -6,6 +6,7 @@ R code for the weekly #TidyTuesday challenges
 
 <table>
   <tr align="center">
+    <td>  </td>
     <td> <img src="https://github.com/Haclio/TidyTuesday/blob/main/2023/2023-W41/haunted.png?raw=true" height = 220pt title="Haunted Places of the USA - week 41"> </td>
     <td> <img src="https://github.com/Haclio/TidyTuesday/blob/main/2023/2023-W40/grants.png?raw=true" height = 220pt title="US Government Grants - week 40"> </td>
    </tr>

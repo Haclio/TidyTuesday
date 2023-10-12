@@ -42,7 +42,7 @@ plot_usmap(color = "grey70", fill = "grey10", alpha = 0.8) +
           axis.text = element_blank(), #Axis labels formatting
           axis.ticks = element_blank(), #No ticks
           axis.title = element_blank(), #No axis title
-          panel.background = element_rect(fill = "grey5", color = NA), #Panel background color = plot background color
+          panel.background = element_rect(fill = "grey5", color = NA),
           panel.grid.major = element_blank(),
           panel.grid.minor = element_blank(),
           plot.background = element_rect(fill = "grey5", color = NA), #Background color

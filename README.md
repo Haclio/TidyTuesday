@@ -4,7 +4,6 @@ R code for the weekly #TidyTuesday challenges
 
 ## 2023
 
-
 <table>
   <tr align="center" >
     <td width="33%"> </td>

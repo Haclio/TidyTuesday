@@ -4,7 +4,7 @@ if (!require("pacman")) install.packages("pacman")
 library(pacman)
 p_load(tidytuesdayR, jsonlite, sf, installr, tidyverse, ggrepel, readxl, openxlsx, emmeans, multcomp, ggforce, rcompanion, RVAideMemoire, extrafont, patchwork, ragg, lemon, DescTools, tidylog, showtext, reshape2, here, languageserver, httpgd, ggpattern)
 
-install.Rtools()
+# install.Rtools()
 
 c25 <- c("dodgerblue2", "#E31A1C", # red
                       "green4",
@@ -25,7 +25,7 @@ if (interactive() && Sys.getenv("RSTUDIO") == "") {
 
 if (interactive() && Sys.getenv("RSTUDIO") == "") {
     Sys.setenv(TERM_PROGRAM = "vscode")
-if ("httpgd" %in% .packages(all.available = TRUE)) {
+    if ("httpgd" %in% .packages(all.available = TRUE)) {
     options(vsc.plot = FALSE)
     options(device = function(...) {
         httpgd::hgd(silent = TRUE)

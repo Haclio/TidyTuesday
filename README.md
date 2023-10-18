@@ -6,7 +6,7 @@ R code for the weekly #TidyTuesday challenges
 
 <table>
   <tr align="center" >
-    <td width="33%"> </td>
+    <td width="33%"> <img src="https://github.com/Haclio/TidyTuesday/blob/main/2023/2023-W42/taylor.png?raw=true"  title="Taylor Swift's Spotify metrics - week 42"> </td>
     <td width="33%"> <img src="https://github.com/Haclio/TidyTuesday/blob/main/2023/2023-W41/haunted.png?raw=true"  title="Haunted Places of the USA - week 41"> </td>
     <td width="33%"> <img src="https://github.com/Haclio/TidyTuesday/blob/main/2023/2023-W40/grants.png?raw=true"  title="US Government Grants - week 40"> </td>
    </tr>

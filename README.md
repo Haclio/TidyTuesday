@@ -9,7 +9,7 @@ R code for the weekly #TidyTuesday challenges
  <tr align="center" >
     <td width="33%"> </td>
     <td width="33%"> </td>
-    <td width="33%"> <img src="https://github.com/Haclio/TidyTuesday/blob/main/2023/2023-W45/elections.png?raw=true"  title="US House elections - week 45"> </td>
+    <td width="33%"> <img src="https://github.com/Haclio/TidyTuesday/blob/main/2023/2023-W45/house.png?raw=true"  title="US House elections - week 45"> </td>
    </tr>
   <tr align="center" >
     <td width="33%"> <img src="https://github.com/Haclio/TidyTuesday/blob/main/2023/2023-W42/taylor.png?raw=true"  title="Taylor Swift's Spotify metrics - week 42"> </td>

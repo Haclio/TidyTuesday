@@ -1,7 +1,7 @@
 {
     "r.alwaysUseActiveTerminal": true,
     "r.bracketedPaste": true,
-    "r.plot.useHttpgd": true,
+    "r.plot.useHttpgd": false,
     "r.rterm.windows": "C:\\Users\\nadalinl\\AppData\\Local\\Programs\\Python\\Python311\\Scripts\\radian.exe",
     "r.rpath.windows": "C:\\Users\\nadalinl\\AppData\\Local\\Programs\\R\\R-4.3.1\\bin\\R.exe",
     "r.workspaceViewer.showObjectSize": true

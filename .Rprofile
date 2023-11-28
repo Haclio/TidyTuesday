@@ -1,4 +1,4 @@
-options(repos = c(CRAN = "https://cran.rstudio.com/"), vsc.use_httpgd = TRUE, ggpattern_use_R4.1_features = TRUE)
+options(repos = c(CRAN = "https://cran.rstudio.com/"), ggpattern_use_R4.1_features = TRUE)
 library(utils)
 if (!require("pacman")) install.packages("pacman")
 library(pacman)
@@ -29,7 +29,7 @@ if (interactive() && Sys.getenv("RSTUDIO") == "") {
     options(vsc.plot = FALSE)
     options(device = function(...) {
         httpgd::hgd(silent = TRUE)
-         .vsc.browser(httpgd::hgd_url(history = FALSE), viewer = "Beside")
+         .vsc.browser(httpgd::hgd_url(history = TRUE), viewer = FALSE)
          })
     }
     source(file.path(Sys.getenv(if (.Platform$OS.type == "windows") "USERPROFILE" else "HOME"), ".vscode-R", "init.R"))

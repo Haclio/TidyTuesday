@@ -9,7 +9,7 @@ R code for the weekly #TidyTuesday challenges
  <tr align="center" >
     <td width="33%"> <img > </td>
     <td width="33%"> <img > </td>
-    <td width="33%"> <img > </td>
+    <td width="33%"> <img src="https://github.com/Haclio/TidyTuesday/blob/main/2024/2024-W06/heritage.png?raw=true"  title="World Heritage Sites/1 dataset 100 visualizations - week 06"> </td>
    </tr>
 </table> 
 

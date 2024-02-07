@@ -42,9 +42,10 @@ gg3 <- ggplot(data = heritage, aes(x = country)) +
              text = element_text(family = "ssp"),
              plot.caption = element_markdown(margin = margin(10, -5, -5, 0), size = 14, color = "#161246"))
 
-gg <- free(gg1) + gg3 & plot_layout(widths = c(0.6, 0.4)) &
+gg <- free(gg1) + gg3 & 
+            plot_layout(widths = c(0.6, 0.4)) &
             plot_annotation(theme = theme(panel.background = element_rect(color = NA), #Background color
-                  plot.background = element_rect(fill = "#94dfff", color = NA))) #Caption formatting #Background color
+                                          plot.background = element_rect(fill = "#94dfff", color = NA))) #Caption formatting #Background color
 
 agg_png("heritage.png", width = 13, height = 12, units = "in", res = 300)
 gg

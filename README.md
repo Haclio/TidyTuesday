@@ -7,7 +7,7 @@ R code for the weekly #TidyTuesday challenges
 <table>
 
  <tr align="center" >
-    <td width="33%"> <img > </td>
+    <td width="33%"> <img src="https://github.com/Haclio/TidyTuesday/blob/main/2024/2024-W10/trash.png?raw=true"  title="Baltimore's Trash Wheel Family - week 10"> </td>
     <td width="33%"> <img src="https://github.com/Haclio/TidyTuesday/blob/main/2024/2024-W08/isc.png?raw=true"  title="R Consortium ISC Grants - week 08"> </td>
     <td width="33%"> <img src="https://github.com/Haclio/TidyTuesday/blob/main/2024/2024-W06/heritage.png?raw=true"  title="World Heritage Sites/1 dataset 100 visualizations - week 06"> </td>
    </tr>

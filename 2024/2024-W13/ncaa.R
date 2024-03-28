@@ -2,7 +2,6 @@ setwd("./2024/2024-W13")
 library(tidyverse)
 library(ggtext)
 library(showtext)
-library(ggh4x)
 showtext_opts(dpi = 320)
 showtext_auto(enable = TRUE)
 fontsfolder <- paste(dirname(dirname(getwd())), "Fonts", sep = "/")
@@ -13,7 +12,12 @@ font_add(family = "ssp",
          italic = paste(fontsfolder, "Source_Sans_Pro", "SourceSansPro-Italic.ttf", sep = "/")) #Source Sans Pro
 
 cap <- "<span style='font-family:fb;'>&#xf09b; </span> Haclio  |  <span style='font-family:fb;'> &#xf099; </span>@LouisNadalin  |  Bluesky : @louisnadalin.bsky.social  |  Source: Nishaan Amin |  #TidyTuesday week 13 2024"
-sub <- "Does past performance inform "
+sub <- "<b>Or, does past performance inform the general public's predictions in US college basketball leagues?</b><br>
+        Today's data is about March Madness, the NCAA Men's Division I basketball tournament 2008-2024 results,<br>
+        and 2024 public predictions of how well each team will do in the different rounds of the tournament.<br>
+        While there is a clear trend of regular winners being picked more often, regular losers accordingly tend<br>
+        to be picked less. However, it isn't an absolute rule : both most-winning teams ended up smack in the middle<br>
+        of finals winning predictions this year." 
 
 #Data wrangling
 team_results <- readr::read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2024/2024-03-26/team-results.csv") |>
@@ -32,11 +36,10 @@ picks <- left_join(picks, team_results) |>
 
 gg1 <- ggplot(picks, aes(x = Round, y = Percent, group = TEAM)) +
     geom_line(aes(color = WINPERCENT * 100), alpha = 0.8) +
-    annotate(geom = "rect", xmin = 6, xmax = 6.5, ymin = 0, ymax = 100, fill = "grey20", color = "grey20") +
-    annotate(geom = "segment", x = 6.05, xend = 6.5, y = 34.92, yend = 100, color = "grey80", linetype = "dashed") +
-    annotate(geom = "segment", x = 6.05, xend = 6.5, y = 0, yend = 0, color = "grey80", linetype = "dashed") +
+    annotate(geom = "rect", xmin = 6, xmax = 6.4, ymin = 0, ymax = 100, fill = "grey20", color = "grey20") +
+    annotate(geom = "segment", x = 6.05, xend = 6.4, y = 34.92, yend = 100, color = "grey80", linetype = "dashed") +
+    annotate(geom = "segment", x = 6.05, xend = 6.4, y = 0, yend = 0, color = "grey80", linetype = "dashed") +
     ylab("Winning chance as predicted by the public (%)") +
-    labs(title = "NCAA Men's March Madness public predictions", subtitle = sub, caption = cap) +
     scale_x_discrete(expand = c(0, 0)) +
     scale_y_continuous(limits = c(0, 100), expand = c(0, 0)) +
     scale_color_viridis_c(option = "inferno", name = "Total winning %\nof the team") +
@@ -47,22 +50,32 @@ gg1 <- ggplot(picks, aes(x = Round, y = Percent, group = TEAM)) +
           axis.title.x = element_blank(),
           axis.title.y = element_text(size = 16),
           legend.background = element_rect(fill = NA),
-          legend.position = c(0.82, 0.88),
+          legend.key.height = unit(1.8, "lines"),
+          legend.position = c(0.85, 0.80),
+          legend.text = element_text(size = 9, color = "grey80", family = "ssp"),
+          legend.title = element_text(size = 12, color = "grey80", family = "ssp", margin = margin(t = 5)),
           panel.grid.major.x = element_line(linetype = "longdash", linewidth = 0.2, color = alpha("grey80", 0.2)),
           panel.grid.major = element_line(color = alpha("grey80", 0.2)),
           panel.grid.minor = element_blank(),
+          plot.margin = margin(r = 0),
           text = element_text(family = "ssp", color = "grey80"))
 
 gg2 <- ggplot(picks |> filter(Round == "Finals"), aes(x = 1, y = reorder(TEAM, Percent), fill = WINPERCENT)) +
     geom_tile(color = NA, show.legend = FALSE) +
-    scale_y_discrete(expand = c(0, 0)) +
+    scale_y_discrete(expand = c(0, 0.1)) +
     scale_fill_viridis_c(option = "inferno") +
     coord_cartesian(clip = "off") +
-    theme_void()
+    theme_void() +
+    theme(plot.margin = margin(l = 0))
 
-gg <- gg1 + gg2 + plot_layout(widths = c(1, 0.05, 0.05)) &
+gg <- gg1 + gg2 + plot_layout(widths = c(1, 0.05)) +
+    plot_annotation(title = "NCAA Men's March Madness Public Predictions", subtitle = sub, caption = cap) &
     theme(panel.background = element_rect(fill = NA, color = NA),
-          plot.background = element_rect(fill = "grey20", color = "grey20"))
+          plot.background = element_rect(fill = "grey20", color = "grey20"),
+          plot.caption = element_markdown(margin = margin(15, 0, 0, 0), size = 8.5, color = "grey80", hjust = 1, family = "ssp"),
+          plot.subtitle = element_markdown(size = 11, color = "grey80", hjust = 0.5, margin = margin(t = 10, b = 20), lineheight = 1.2, family = "ssp"),
+          plot.title = element_markdown(size = 26, color = "grey80", hjust = 0.5, lineheight = 1.1, family = "ssp", margin = margin(t = 15)),
+          plot.title.position = "plot")
 gg
 
 agg_png("ncaa.png", width = 8, height = 9, units = "in", res = 300)

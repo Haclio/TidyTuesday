@@ -5,6 +5,11 @@ R code for the weekly #TidyTuesday challenges
 ## 2024
 
 <table>
+ <tr align="center" >
+    <td width="33%">  </td>
+    <td width="33%">  </td>
+    <td width="33%"> <img src="https://github.com/Haclio/TidyTuesday/blob/main/2024/2024-W12/xmen.png?raw=true"  title="X-men Mutant Moneyball - week 12"> </td>
+   </tr>
 
  <tr align="center" >
     <td width="33%"> <img src="https://github.com/Haclio/TidyTuesday/blob/main/2024/2024-W10/trash.png?raw=true"  title="Baltimore's Trash Wheel Family - week 10"> </td>

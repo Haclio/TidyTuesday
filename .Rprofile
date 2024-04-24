@@ -6,6 +6,7 @@ p_load(tidytuesdayR, jsonlite, sf, installr, tidyverse, ggrepel, readxl, openxls
 
 # install.Rtools()
 
+#Vectors
 c25 <- c("dodgerblue2", "#E31A1C", # red
                       "green4",
                       "#6A3D9A", # purple
@@ -19,6 +20,20 @@ c25 <- c("dodgerblue2", "#E31A1C", # red
                       "darkturquoise", "green1", "yellow4", "yellow3",
                       "darkorange4", "brown", "darkred")
 
+european_countries <- c("Albania", "Andorra", "Armenia", "Austria", "Azerbaijan",
+                        "Belarus", "Belgium", "Bosnia and Herzegovina", "Bulgaria", "Croatia",
+                        "Cyprus", "Czech Republic", "Denmark", "Estonia", "Finland",
+                        "France", "Georgia", "Germany", "Greece", "Hungary",
+                        "Iceland", "Ireland", "Italy", "Kazakhstan", "Kosovo",
+                        "Latvia", "Liechtenstein", "Lithuania", "Luxembourg", "Malta",
+                        "Moldova", "Monaco", "Montenegro", "Netherlands", "North Macedonia",
+                        "Norway", "Poland", "Portugal", "Romania", "Russia",
+                        "San Marino", "Serbia", "Slovakia", "Slovenia", "Spain",
+                        "Sweden", "Switzerland", "Turkey", "Ukraine", "United Kingdom")
+
+
+
+#VSCode settings
 if (interactive() && Sys.getenv("RSTUDIO") == "") {
   source(file.path(Sys.getenv(if (.Platform$OS.type == "windows") "USERPROFILE" else "HOME"), ".vscode-R", "init.R"))
 }
@@ -34,5 +49,3 @@ if (interactive() && Sys.getenv("RSTUDIO") == "") {
     }
     source(file.path(Sys.getenv(if (.Platform$OS.type == "windows") "USERPROFILE" else "HOME"), ".vscode-R", "init.R"))
 }
-
-#dev.new(noRStudioGD = TRUE) pour ouvrir un nouveau viewer, utile dans Rstudio, pas tant dans VSCode

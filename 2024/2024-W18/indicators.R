@@ -42,9 +42,9 @@ ggplot(data2, aes(x = income_quantile, y = value * 100)) +
     theme_void() +
     theme(axis.line = element_blank(),
         axis.text.x = element_blank(),
-        axis.text.y = element_text(color = "grey20", size = 20, family = "ssp", margin = margin(r = 8)),
+        axis.text.y = element_text(color = "grey20", size = 14, family = "ssp", margin = margin(r = 8)),
         axis.title.x = element_blank(),
-        axis.title.y = element_text(size = 18, angle = 90, margin = margin(r = 10)),
+        axis.title.y = element_text(size = 16, angle = 90, margin = margin(r = 10)),
         legend.background = element_rect(fill = NA, color = NA),
         legend.direction = "horizontal",
         legend.key.spacing.y = unit(0, "cm"),

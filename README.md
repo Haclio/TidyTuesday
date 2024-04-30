@@ -5,6 +5,12 @@ R code for the weekly #TidyTuesday challenges
 ## 2024
 
 <table>
+  <tr align="center" >
+    <td width="33%"> </td>
+    <td width="33%"> </td>
+    <td width="33%"> <img src="https://github.com/Haclio/TidyTuesday/blob/main/2024/2024-W18/indicators.png?raw=true"  title="Female employment share - week 18"> </td>
+   </tr>
+ 
  <tr align="center" >
     <td width="33%"> <img src="https://github.com/Haclio/TidyTuesday/blob/main/2024/2024-W17/spaceobject.png?raw=true"  title="Outer Space Objects - week 17"> </td>
     <td width="33%"> <img src="https://github.com/Haclio/TidyTuesday/blob/main/2024/2024-W13/ncaa.png?raw=true"  title="NCAA Men's March Madness - week 13"> </td>

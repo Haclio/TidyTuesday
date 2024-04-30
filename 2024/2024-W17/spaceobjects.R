@@ -29,7 +29,7 @@ spaceobjects <- outer_space_objects |>
     filter(any(rank <= 10)) |>
     filter(Year >= 1993)
 
-ggplot(spaceobjects) +
+gg <- ggplot(spaceobjects) +
     geom_point(aes(x = Year, y = rank, color = Entity), size = 3) +
     geom_line(aes(x = Year, y = rank, color = Entity), linewidth = 7, alpha = 0.7, lineend = "round", show.legend = FALSE) +
     geom_point(aes(x = Year, y = rank), size = 0.8, color = "white", show.legend = TRUE) +
